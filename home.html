@@ -63,8 +63,8 @@
         <div class="flex gap-2">
           <input id="input-search"
             type="text"
-            placeholder="Search for issues"
-            class="input input-bordered w-24 md:w-auto fa-icon-placeholder"
+            placeholder="Search for issues by clicking enter button only"
+            class="input input-bordered w-24 md:w-auto fa-icon-placeholder placeholder:text-xs"
           />
 
           <div class="dropdown dropdown-end bg-red-200">
@@ -84,7 +84,7 @@
                 </a>
               </li>
               <li><a>Settings</a></li>
-              <li><a>Logout</a></li>
+              <li><a id="log-out-btn">Logout</a></li>
             </ul>
           </div>
         </div>
@@ -140,13 +140,13 @@
         <div class="issue-color flex items-center gap-3">
           <div class="flex items-center">
             <span class="text-[5px]">
-              <i class="fa-solid fa-circle"></i>
+              <i class="fa-solid fa-circle text-green-700"></i>
             </span>
             <span class="pl-1 font-normal"> open </span>
           </div>
           <div class="flex items-center">
             <span class="text-[5px]">
-              <i class="fa-solid fa-circle"></i>
+              <i class="fa-solid fa-circle text-blue-700"></i>
             </span>
             <span class="pl-1 font-normal"> close </span>
           </div>
