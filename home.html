@@ -40,7 +40,7 @@
         font-family: "Geist", sans-serif;
       }
 
-      .active{
+      .active {
         color: white;
         background-color: blue;
         border: none;
@@ -61,7 +61,7 @@
           </div>
         </div>
         <div class="flex gap-2">
-          <input
+          <input id="input-search"
             type="text"
             placeholder="Search for issues"
             class="input input-bordered w-24 md:w-auto fa-icon-placeholder"
@@ -96,17 +96,20 @@
       <div
         class="w-9/12 mx-auto p-5 rounded-sm shadow-sm bg-white space-x-[10px]"
       >
-        <button id="all-issue-btn"
+        <button
+          id="all-issue-btn"
           class="issue-btn btn pl-10 pr-10 btn-outline border-[#cbd1d8] btn-sm text-[#64748B] active"
         >
           All
         </button>
-        <button id="closed-issue-btn"
+        <button
+          id="closed-issue-btn"
           class="issue-btn btn pl-10 pr-10 btn-outline border-[#cbd1d8] btn-sm text-[#64748B] active"
         >
           Closed
         </button>
-        <button id="open-issue-btn"
+        <button
+          id="open-issue-btn"
           class="issue-btn btn pl-10 pr-10 btn-outline border-[#cbd1d8] btn-sm text-[#64748B] active"
         >
           Open
@@ -123,8 +126,11 @@
           <div class="issue-logo rounded-full p-1 bg-[#ECE4FF]">
             <img src="./assets/Aperture.png" alt="" />
           </div>
-          <div id="issue-counter" class="issue-number-and-text text-[13px] font-semibold ml-2">
-            <!-- <h2>50 issues</h2> -->
+          <div
+            id=""
+            class="issue-number-and-text text-[13px] font-semibold ml-2"
+          >
+            <h2 id="issue-counter">50 issues</h2>
             <p class="text-[#b3b4b5] font-normal">
               Track and Manage Your Project Issues
             </p>
@@ -150,13 +156,34 @@
 
     <!-- issue card -->
     <section>
-      <div  class="w-9/12 mx-auto p-4 shadow-sm bg-[#F8FAFC]">
-        <div id="issue-card-container" class="issue-card-container grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div class="w-9/12 mx-auto p-4 shadow-sm bg-[#F8FAFC]">
+        <div
+          id="issue-card-container"
+          class="issue-card-container grid grid-cols-1 md:grid-cols-3 gap-3"
+        >
           <!--single card  -->
-          
         </div>
       </div>
     </section>
+
+    <!-- modal -->
+
+    <!-- You can open the modal using ID.showModal() method -->
+    <!-- <button class="btn" onclick="my_modal_4.showModal()">open modal</button> -->
+    <dialog id="my_modal_4" class="modal">
+      <div class="modal-box w-6/12 max-w-5xl">
+        <div id="issueDetailsContainer" class="w-full space-y-3">
+          
+        </div>
+
+        <div class="modal-action">
+          <form method="dialog">
+            <!-- if there is a button, it will close the modal -->
+            <button class="btn btn-primary btn-sm">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
 
     <!-- login js -->
     <!-- <script src="./scripts/login.js"></script> -->

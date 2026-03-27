@@ -61,6 +61,14 @@ const openClosedStatusSetter = (status) => {
     }
 }
 
+const openClosedBtnSetter =(status)=>{
+    if(status == 'open'){
+        return `btn-success`
+    } else {
+        return `btn-primary`
+    }
+}
+
 
 const removeActiveClass = () => {
     const allBtn = document.getElementsByClassName('issue-btn');
@@ -91,6 +99,50 @@ function setActiveButton(activeBtn) {
   activeBtn.classList.add('active');                       // add to clicked
 }
 
+// const singleIssueUrl = 'https://phi-lab-server.vercel.app/api/v1/lab/issue/{id}'
+
+const loadIssueDetails = async(id)=>{
+    const singleIssueUrl = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    const res = await fetch(singleIssueUrl);
+    const details = await res.json();
+    displayIssueDetails(details.data);
+}
+
+const displayIssueDetails = (issueDetails)=> {
+    const issueDetailsContainer = document.getElementById('issueDetailsContainer');
+    issueDetailsContainer.innerHTML = `
+        <h2 class="text-xl font-semibold">${issueDetails.title}</h2>
+          <span class="btn btn-xs ${openClosedBtnSetter(issueDetails.status)} rounded-2xl">${issueDetails.status}</span>
+          <span class="text-sm text-[#64748B]">. author by ${issueDetails.author}</span>
+          <span class="text-sm text-[#64748B]">. ${new Date(issueDetails.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+          
+            <div>
+                ${showingLabels(issueDetails.labels)}
+            </div>
+
+          <p class="text-sm text-[#64748B]">${issueDetails.description}</p>
+
+          <div
+            class="w-full grid grid-cols-2 bg-gray-50 rounded-sm p-3"
+          >
+            <div>
+              <p class="text-sm text-[#64748B]">Assignee</p>
+              <h3 class="text-sm">${issueDetails.assignee}</h3>
+            </div>
+            <div>
+              <p class="text-sm text-[#64748B]">Priority</p>
+              ${showingPriority(issueDetails.priority)}
+            </div>
+          </div>
+    
+    `
+
+    document.getElementById('my_modal_4').showModal();
+    
+}
+
+
+
 
 
 let allIssues = []; // store fetched data globally
@@ -109,10 +161,6 @@ function loadAllIssues() {
 loadAllIssues();
 
 
-
-
-
-
 // Call on page load
 // loadAllIssues();
 
@@ -127,10 +175,10 @@ const displayAllCards =(allIssue)=>{
 
     const issueCounterContainer = document.getElementById('issue-counter');
     issueCounterContainer.innerHTML ='';
-    const h2 = document.createElement('h2');
+    const span = document.createElement('span');
     
-    h2.innerText = `${allIssue.length} issues`;
-    issueCounterContainer.prepend(h2);
+    span.innerText = `${allIssue.length} issues`;
+    issueCounterContainer.prepend(span);
 
     const allIssueCardContainer = document.getElementById('issue-card-container');
     allIssueCardContainer.innerHTML = '';
@@ -139,7 +187,7 @@ const displayAllCards =(allIssue)=>{
       
         const singleIssuecard = document.createElement('div');
         singleIssuecard.innerHTML = `
-            <div class="issue-card p-4 rounded-sm shadow-xl border-t-4 ${issueBorderSetter(singleIssue.priority)}">
+            <div onclick="loadIssueDetails(${singleIssue.id})" class="issue-card p-4 rounded-sm shadow-xl border-t-4 ${issueBorderSetter(singleIssue.priority)}">
             <!-- card top -->
             <div class="card-top border-b border-[#a1a2a4] space-y-3 pb-5">
               <div class="issue-status-holder flex justify-between items-center">
@@ -196,5 +244,25 @@ document.getElementById('closed-issue-btn').addEventListener('click', (e) => {
   displayAllCards(filtered);
   
 });
+
+setActiveButton(document.getElementById('all-issue-btn'));
+
+
+
+document.getElementById('input-search').addEventListener('keypress', (e)=>{
+    if(e.key === 'Enter'){
+        removeActiveClass();
+        const searchInput = document.getElementById('input-search');
+        const searchValue = searchInput.value.trim().toLowerCase();
+        console.log(searchValue);
+
+        const filtered = allIssues.filter(issue =>
+    issue.title.toLowerCase().includes(searchValue)
+  );
+
+  displayAllCards(filtered);
+        
+    }
+})
 
 
