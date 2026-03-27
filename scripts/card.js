@@ -218,6 +218,26 @@ const showingPriority =(priorityValue)=>{
 }
 
 
+const issueBorderSetter = (priority)=>{
+    if(priority == 'high'){
+        return `border-t-[#E7000B]`
+    } else if(priority == 'medium'){
+        return 'border-t-[#D08700]'
+    } else{
+        return 'border-t-[#155DFC]'
+    }
+}
+
+
+const openClosedStatusSetter = (status) => {
+    if(status == 'open'){
+        return `<img src="./assets/Open-Status.png" alt="">`
+    } else {
+        return `<img src="./assets/Closed- Status .png" alt="" />`
+    }
+}
+
+
 
 // document.getElementById('issue-all-btn').addEventListener('click', ()=>{
 //     const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
@@ -233,17 +253,24 @@ function loadAllIssues() {
 
   fetch(url)
     .then(res => res.json())
-    .then(json => displayAllCards(json.data));
+    .then(json => displayAllCards(json.data))
 }
 
 // Call on page load
-// loadAllIssues();
+loadAllIssues();
 
 // Still works on button click too
 document.getElementById('issue-all-btn').addEventListener('click', loadAllIssues);
 
 
 const displayAllCards =(allIssue)=>{
+
+    const issueCounterContainer = document.getElementById('issue-counter');
+    const h2 = document.createElement('h2');
+    h2.innerText = `${allIssue.length} issues`
+    issueCounterContainer.prepend(h2);
+
+    // console.log(allIssue.length);
     // getting the parent 
     const allIssueCardContainer = document.getElementById('issue-card-container');
 
@@ -254,12 +281,13 @@ const displayAllCards =(allIssue)=>{
         // console.log(singleIssue.labels)
         const singleIssuecard = document.createElement('div');
         singleIssuecard.innerHTML = `
-            <div class="issue-card p-4 rounded-sm shadow-xl border-t-4 border-t-[#00A96E]">
+            <div class="issue-card p-4 rounded-sm shadow-xl border-t-4 ${issueBorderSetter(singleIssue.priority)}">
             <!-- card top -->
             <div class="card-top border-b border-[#a1a2a4] space-y-3 pb-5">
               <div class="issue-status-holder flex justify-between items-center">
                 <div class="issue-status-image">
-                  <img src="./assets/Closed- Status .png" alt="" />
+                    ${openClosedStatusSetter(singleIssue.status)}
+                    
                 </div>
                 ${showingPriority(singleIssue.priority)}
               </div>
@@ -297,6 +325,24 @@ const displayAllCards =(allIssue)=>{
         
         allIssueCardContainer.append(singleIssuecard);
     });
+}
+
+
+function loadAllClosedIssues() {
+  const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
+
+  fetch(url)
+    .then(res => res.json())
+    .then(json => displaycloseCards(json.data));
+}
+
+// loadAllClosedIssues();
+
+document.getElementById('closed-issue-btn').addEventListener('click', loadAllClosedIssues);
+
+const displaycloseCards =(allClosedIssue)=>{
+    const filterIssue = allClosedIssue.filter(allstatus => allstatus.status == 'closed');
+    displayAllCards(filterIssue);
 }
 
 
