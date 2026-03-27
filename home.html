@@ -39,6 +39,12 @@
       * {
         font-family: "Geist", sans-serif;
       }
+
+      .active{
+        color: white;
+        background-color: blue;
+        border: none;
+      }
     </style>
   </head>
 
@@ -90,18 +96,18 @@
       <div
         class="w-9/12 mx-auto p-5 rounded-sm shadow-sm bg-white space-x-[10px]"
       >
-        <button id="issue-all-btn"
-          class="btn pl-10 pr-10 btn-outline border-[#cbd1d8] btn-sm text-[#64748B]"
+        <button id="all-issue-btn"
+          class="issue-btn btn pl-10 pr-10 btn-outline border-[#cbd1d8] btn-sm text-[#64748B] active"
         >
           All
         </button>
         <button id="closed-issue-btn"
-          class="btn pl-10 pr-10 btn-outline border-[#cbd1d8] btn-sm text-[#64748B]"
+          class="issue-btn btn pl-10 pr-10 btn-outline border-[#cbd1d8] btn-sm text-[#64748B] active"
         >
           Closed
         </button>
         <button id="open-issue-btn"
-          class="btn pl-10 pr-10 btn-outline border-[#cbd1d8] btn-sm text-[#64748B]"
+          class="issue-btn btn pl-10 pr-10 btn-outline border-[#cbd1d8] btn-sm text-[#64748B] active"
         >
           Open
         </button>

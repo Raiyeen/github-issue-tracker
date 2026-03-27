@@ -1,4 +1,5 @@
 
+
 const showingLabels =(labelsArry)=>{
     // console.log(labelsArry);
     const label = labelsArry.map((el) => `  
@@ -61,23 +62,36 @@ const openClosedStatusSetter = (status) => {
 }
 
 
+const removeActiveClass = () => {
+    const allBtn = document.getElementsByClassName('issue-btn');
+    for (const btn of allBtn) {
+        btn.classList.remove('active');
+    }
+    // allBtn.forEach(btn => btn.classList.remove('active'));
+}
 
-// document.getElementById('issue-all-btn').addEventListener('click', ()=>{
-//     const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
+removeActiveClass();
 
-//     fetch(url)
-//     .then(res => res.json())
-//     .then(json => displayAllCards(json.data))
-    
-// } )
-
-// function loadAllIssues() {
-//   const url = 'https://phi-lab-server.vercel.app/api/v1/lab/issues';
-
-//   fetch(url)
-//     .then(res => res.json())
-//     .then(json => displayAllCards(json.data))
+// const setActiveClass = (activebtn)=>{
+//     removeActiveClass();
+//     const status = activebtn.map((active) => (active.status));
+//     const st = status.find((m)=> m == 'open' || 'closed');
+//     document.getElementById(`${st}-issue-btn`).classList.add('active');
+  
 // }
+
+const buttons = [
+  document.getElementById('all-issue-btn'),
+  document.getElementById('open-issue-btn'),
+  document.getElementById('closed-issue-btn'),
+];
+
+function setActiveButton(activeBtn) {
+  buttons.forEach(btn => btn.classList.remove('active')); // remove from all
+  activeBtn.classList.add('active');                       // add to clicked
+}
+
+
 
 let allIssues = []; // store fetched data globally
 
@@ -102,9 +116,11 @@ loadAllIssues();
 // Call on page load
 // loadAllIssues();
 
-// Still works on button click too
-document.getElementById('issue-all-btn').addEventListener('click', ()=> {
-    displayAllCards(allIssues)});
+document.getElementById('all-issue-btn').addEventListener('click', (e)=> {
+    setActiveButton(e.target);
+    displayAllCards(allIssues);
+    
+});
 
 
 const displayAllCards =(allIssue)=>{
@@ -168,14 +184,17 @@ const displayAllCards =(allIssue)=>{
 }
 
 
-document.getElementById('open-issue-btn').addEventListener('click', () => {
+document.getElementById('open-issue-btn').addEventListener('click', (e) => {
   const filtered = allIssues.filter(issue => issue.status.toLowerCase() === 'open');
+  setActiveButton(e.target);
   displayAllCards(filtered);
 });
 
-document.getElementById('closed-issue-btn').addEventListener('click', () => {
+document.getElementById('closed-issue-btn').addEventListener('click', (e) => {
   const filtered = allIssues.filter(issue => issue.status.toLowerCase() === 'closed');
+  setActiveButton(e.target);
   displayAllCards(filtered);
+  
 });
 
 
